@@ -10,19 +10,11 @@ public class test {
     public static void main(String args[]) {
         try {
             con = Connector.getConnection();
-            String query = "SELECT * FROM school";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = Resident.testMethod("*", "resident");
             while (rs.next()) {
-                String id = rs.getString("sname");
+                String id = rs.getString("name");
                 System.out.println(id);
             }
-            if (stmt != null) {
-                stmt.close();
-            }
-
-
-            // Verify the connection is open. Then close it.
             con.close();
 
         } catch (SQLException e) {
@@ -30,7 +22,6 @@ public class test {
         e.printStackTrace(new PrintWriter(sw));
         String exceptionAsString = sw.toString();
         System.out.println(exceptionAsString);
-        System.out.println("---------------------------------");
         }
     }
 }

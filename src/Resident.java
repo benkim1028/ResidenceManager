@@ -5,7 +5,11 @@ import java.sql.*;
  */
 public class Resident {
 
-    private Connection con = Connector.getConnection();
+    private static Connection con = Connector.getConnection();
 
-
+    public static ResultSet testMethod(String select, String from) throws SQLException{
+        String query = "SELECT " + select + "FROM " + from;
+        Statement stmt = con.createStatement();
+        return stmt.executeQuery(query);
+    }
 }
