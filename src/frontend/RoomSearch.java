@@ -1,6 +1,9 @@
 package frontend;
 
+import backend.Room;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,6 +79,21 @@ public class RoomSearch extends JPanel{
                     kitchenBox.setEnabled(true);
                     bathroomBox.setEnabled(true);
                     loungeBox.setEnabled(true);
+                }
+            }
+        });
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!roomidBox.isSelected() && !roomNumberBox.isSelected() && !occupancyBox.isSelected() && !rnameBox.isSelected() && !addressBox.isSelected()&&
+                        !typeBox.isSelected() && !accommodationBox.isSelected() && !sizeBox.isSelected() && !rateBox.isSelected() && !featuresBox.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "Please select at least one attribute", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (roomidText.getText().equals("") && occupancyText.getText().equals("") && (typeDrop.getSelectedIndex() == 0) && accommodationText.getText().equals("") && sizeText.getText().equals("") && rateText.getText().equals("") && !kitchenBox.isSelected() && !bathroomBox.isSelected() && !loungeBox.isSelected()) {
+                    DefaultTableModel dtm = Room.searchRoom(roomidBox.isSelected(), roomNumberBox.isSelected(), occupancyBox.isSelected(), rnameBox.isSelected(), addressBox.isSelected(),
+                            typeBox.isSelected(), accommodationBox.isSelected(), sizeBox.isSelected(), rateBox.isSelected(), featuresBox.isSelected());
+                    new ResultTable(dtm).setVisible(true);
                 }
             }
         });
