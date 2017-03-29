@@ -1,3 +1,5 @@
+import backend.Resident;
+
 import java.sql.*;
 import java.io.*;
 

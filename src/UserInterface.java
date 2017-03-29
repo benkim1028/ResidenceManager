@@ -1,3 +1,5 @@
+import backend.Resident;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +21,7 @@ public class UserInterface extends JFrame {
 
     public UserInterface() {
         super("Resident Manager");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel newPanel = new JPanel(new GridBagLayout());
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;

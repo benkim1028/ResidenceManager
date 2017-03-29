@@ -1,41 +1,46 @@
+package frontend;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
 
 /**
  * Created by GL on 2017-03-26.
  */
 public class StartInterface extends JFrame {
 
-    private JLabel instruction = new JLabel("Please select your user.");
     private JButton residentButton = new JButton("Resident");
     private JButton managerButton = new JButton("Manager");
 
     public StartInterface() {
-        super("Resident Manager");
+        super("Residence Manager");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         JPanel newPanel = new JPanel(new GridBagLayout());
+        newPanel.setPreferredSize(new Dimension(400, 180));
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(20, 20, 20, 20);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        newPanel.add(instruction, constraints);
+        newPanel.add(new JLabel("Please select your user."), constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
+        residentButton.setMargin(new Insets(15, 40, 15, 40));
         newPanel.add(residentButton, constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 1;
+        managerButton.setMargin(new Insets(15, 40, 15, 40));
         newPanel.add(managerButton, constraints);
 
         residentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new UserInterface().setVisible(true);
+                new ResidentInterface().setVisible(true);
                 dispose();
             }
         });
@@ -43,7 +48,7 @@ public class StartInterface extends JFrame {
         managerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new UserInterface().setVisible(true);
+                new ManagerInterface().setVisible(true);
                 dispose();
             }
         });
