@@ -16,6 +16,19 @@ public class Room {
     private static Connection con = Connector.getConnection();
 
     public static DefaultTableModel searchRoom(boolean roomidBox, boolean roomNumberBox, boolean occupancyBox, boolean rnameBox, boolean addressBox,
+                                               boolean typeBox, boolean accommodationBox, boolean sizeBox, boolean rateBox, boolean featuresBox,
+                                               String roomidText, int occupancyDrop, int occupancyVal, int typeDrop,
+                                               int accommodationDrop, int accommodationVal, int sizeDrop, int sizeVal, int rateDrop, int rateVal,
+                                               boolean kitchenBox, boolean bathroomBox, boolean loungeBox) {
+        String select = createSelectString(roomidBox, roomNumberBox, occupancyBox, rnameBox, addressBox, typeBox, accommodationBox, sizeBox, rateBox, featuresBox);
+        String from = "FROM room, roomtype ";
+        String where = createWhereString(roomidText, occupancyDrop, occupancyVal, typeDrop, accommodationDrop, accommodationVal, sizeDrop, sizeVal, rateDrop, rateVal, kitchenBox, bathroomBox, loungeBox);
+        String query = select + from + where;
+        System.out.println(query);
+        return executeSearchQuery(query);
+    }
+
+    public static DefaultTableModel searchRoom(boolean roomidBox, boolean roomNumberBox, boolean occupancyBox, boolean rnameBox, boolean addressBox,
                                                boolean typeBox, boolean accommodationBox, boolean sizeBox, boolean rateBox, boolean featuresBox) {
         String select = createSelectString(roomidBox, roomNumberBox, occupancyBox, rnameBox, addressBox, typeBox, accommodationBox, sizeBox, rateBox, featuresBox);
         String from = "FROM room, roomtype ";
@@ -62,6 +75,55 @@ public class Room {
         return select;
     }
 
+    private static String createWhereString(String roomidText, int occupancyDrop, int occupancyVal, int typeDrop,
+                                     int accommodationDrop, int accommodationVal, int sizeDrop, int sizeVal, int rateDrop, int rateVal,
+                                     boolean kitchenBox, boolean bathroomBox, boolean loungeBox) {
+        String where = "WHERE room.type = roomtype.type AND ";
+        if (!roomidText.equals("")) {
+            where = where + "UPPER(room.roomid) LIKE UPPER('%" + roomidText + "%') AND ";
+        }
+        if (occupancyVal != -1) {
+            where = where + "room.occupancy " + findSymbolString(occupancyDrop) + " " + occupancyVal + " AND ";
+        }
+        if (typeDrop == 1) {
+            where = where + "room.type = 'One Bedroom'";
+        }
+        else if (typeDrop == 2) {
+            where = where + "room.type = 'Two Bedrooms Suite'";
+        }
+        else if (typeDrop == 3) {
+            where = where + "room.type = 'Four Bedrooms Suite'";
+        }
+        else if (typeDrop == 4) {
+            where = where + "room.type = 'Six Bedrooms Suite'";
+        }
+        else if (typeDrop == 5) {
+            where = where + "room.type = 'Studio'";
+        }
+        else {
+            if (accommodationVal != -1) {
+                where = where + "roomtype.accommodation " + findSymbolString(accommodationDrop) + " " + accommodationVal + " AND ";
+            }
+            if (sizeVal != -1) {
+                where = where + "roomtype.rsize " + findSymbolString(sizeDrop) + " " + sizeVal + " AND ";
+            }
+            if (rateVal != -1) {
+                where = where + "roomtype.rate " + findSymbolString(rateDrop) + " " + rateVal + " AND ";
+            }
+            if (kitchenBox) {
+                where = where + "features LIKE '%kitchen%' AND ";
+            }
+            if (bathroomBox) {
+                where = where + "features LIKE '%bathroom%' AND ";
+            }
+            if (loungeBox) {
+                where = where + "features LIKE '%lounge%' AND ";
+            }
+            where = where.substring(0, where.length()-5);
+        }
+        return where;
+    }
+
     private static DefaultTableModel executeSearchQuery(String query) {
         try {
             Statement stmt = con.createStatement();
@@ -91,5 +153,23 @@ public class Room {
             System.out.println(exceptionAsString);
         }
         return null;
+    }
+
+    private static String findSymbolString(int dropIndex) {
+        if (dropIndex == 0) {
+            return "<";
+        }
+        else if (dropIndex == 1) {
+            return ">";
+        }
+        else if (dropIndex == 2) {
+            return "=";
+        }
+        else if (dropIndex == 3) {
+            return "<=";
+        }
+        else {
+            return ">=";
+        }
     }
 }

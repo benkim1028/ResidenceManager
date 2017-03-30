@@ -32,7 +32,7 @@ public class RoomSearch extends JPanel{
     private JCheckBox kitchenBox = new JCheckBox("Kitchen");
     private JCheckBox bathroomBox = new JCheckBox("Bathroom");
     private JCheckBox loungeBox = new JCheckBox("Lounge");
-    String[] typeString = {"any", "One Bed Room", "Two Bed Room", "Four Bed Room", "Six Bed Room", "Suite"};
+    String[] typeString = {"any", "One Bedroom", "Two Bedrooms", "Four Bedrooms", "Six Bedrooms", "Studio"};
     private JComboBox typeDrop = new JComboBox(typeString);
     String[] symbolString = {"<", ">", "=", "<=", ">="};
     private JComboBox occupancyDrop = new JComboBox(symbolString);
@@ -95,6 +95,46 @@ public class RoomSearch extends JPanel{
                             typeBox.isSelected(), accommodationBox.isSelected(), sizeBox.isSelected(), rateBox.isSelected(), featuresBox.isSelected());
                     new ResultTable(dtm).setVisible(true);
                 }
+                else {
+                    try {
+                        int occupancyVal = -1;
+                        int accomodationVal = -1;
+                        int sizeVal = -1;
+                        int rateVal = -1;
+                        if (!occupancyText.getText().equals("")) {
+                            occupancyVal = Integer.parseInt(occupancyText.getText());
+                            if (occupancyVal < 0) {
+                                throw new NumberFormatException();
+                            }
+                        }
+                        if (!accommodationText.getText().equals("")) {
+                            accomodationVal = Integer.parseInt(accommodationText.getText());
+                            if (accomodationVal < 0) {
+                                throw new NumberFormatException();
+                            }
+                        }
+                        if (!sizeText.getText().equals("")) {
+                            sizeVal = Integer.parseInt(sizeText.getText());
+                            if (sizeVal < 0) {
+                                throw new NumberFormatException();
+                            }
+                        }
+                        if (!rateText.getText().equals("")) {
+                            rateVal = Integer.parseInt(rateText.getText());
+                            if (rateVal < 0) {
+                                throw new NumberFormatException();
+                            }
+                        }
+                        DefaultTableModel dtm = Room.searchRoom(roomidBox.isSelected(), roomNumberBox.isSelected(), occupancyBox.isSelected(), rnameBox.isSelected(), addressBox.isSelected(),
+                                typeBox.isSelected(), accommodationBox.isSelected(), sizeBox.isSelected(), rateBox.isSelected(), featuresBox.isSelected(),
+                                roomidText.getText(), occupancyDrop.getSelectedIndex(), occupancyVal, typeDrop.getSelectedIndex(),
+                                accommodationDrop.getSelectedIndex(), accomodationVal, sizeDrop.getSelectedIndex(), sizeVal, rateDrop.getSelectedIndex(), rateVal,
+                                kitchenBox.isSelected(), bathroomBox.isSelected(), loungeBox.isSelected());
+                        new ResultTable(dtm).setVisible(true);
+                    }catch (NumberFormatException ne) {
+                        JOptionPane.showMessageDialog(null, "Please enter valid numbers", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         });
     }
@@ -143,7 +183,7 @@ public class RoomSearch extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        searchPanel.add(new JLabel("accommodation: "), gbc);
+        searchPanel.add(new JLabel("Accommodation: "), gbc);
         gbc.gridx = 1;
         searchPanel.add(createDropTextPanel(accommodationDrop, accommodationText), gbc);
 

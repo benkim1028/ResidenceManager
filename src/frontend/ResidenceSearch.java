@@ -23,11 +23,11 @@ public class ResidenceSearch extends JPanel {
     private JTextField snameText = new JTextField(40);
     private JButton searchButton = new JButton("Search");
 
-    private JCheckBox obrBox = new JCheckBox("One Bed Room");
-    private JCheckBox tbrBox = new JCheckBox("Two Bed Room");
-    private JCheckBox fbrBox = new JCheckBox("Four Bed Room");
-    private JCheckBox sbrBox = new JCheckBox("Six Bed Room");
-    private JCheckBox suiteBox = new JCheckBox("Suite");
+    private JCheckBox obrBox = new JCheckBox("One Bedrooms");
+    private JCheckBox tbrBox = new JCheckBox("Two Bedrooms");
+    private JCheckBox fbrBox = new JCheckBox("Four Bedrooms");
+    private JCheckBox sbrBox = new JCheckBox("Six Bedrooms");
+    private JCheckBox studioBox = new JCheckBox("Studio");
     private JButton findButton = new JButton("Find");
 
     public ResidenceSearch(int width, int height) {
@@ -128,7 +128,7 @@ public class ResidenceSearch extends JPanel {
         findPanel.add(new JLabel("Find residences by room types:"), gbc);
 
         gbc.gridy = 1;
-        findPanel.add(createCheckBoxPanel(obrBox, tbrBox, fbrBox, sbrBox, suiteBox), gbc);
+        findPanel.add(createCheckBoxPanel(obrBox, tbrBox, fbrBox, sbrBox, studioBox), gbc);
 
         gbc.gridy = 2;
         findPanel.add(findButton, gbc);
