@@ -66,6 +66,21 @@ public class ResidenceSearch extends JPanel {
 
             }
         });
+
+        findButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!obrBox.isSelected() && !tbrBox.isSelected() && !fbrBox.isSelected() && !sbrBox.isSelected() && !studioBox.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "Please select at least one roomtype", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    DefaultTableModel dtm = Residence.searchResidenceByRoomType(rnameBox.isSelected(), addressBox.isSelected(), snameBox.isSelected(), obrBox.isSelected(), tbrBox.isSelected(), fbrBox.isSelected(),
+                            sbrBox.isSelected(), studioBox.isSelected());
+                    new ResultTable(dtm).setVisible(true);
+                }
+
+            }
+        });
     }
 
     private JPanel createAttributePanel() {
