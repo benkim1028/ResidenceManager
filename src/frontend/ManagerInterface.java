@@ -19,8 +19,8 @@ public class ManagerInterface extends JFrame {
     private JMenu optionsMenu = new JMenu("Options");
     private JMenuItem sResidentMenu = new JMenuItem("Search Residents");
     private JMenuItem sRoomMenu = new JMenuItem("Search Rooms");
-    private JMenuItem uResidentMenu = new JMenuItem("Update Residents");
-    private JMenuItem uRoomMenu = new JMenuItem("Update Rooms");
+    private JMenuItem uResidentMenu = new JMenuItem("Update Resident");
+    private JMenuItem dResidentMenu = new JMenuItem("Delete Resident/Contract");
     private JMenuItem changeUserMenu = new JMenuItem("Change User");
     private JMenuItem exitMenu = new JMenuItem("Exit");
 
@@ -34,10 +34,14 @@ public class ManagerInterface extends JFrame {
         searchMenu.setMargin(new Insets(0, 20, 0, 20));
         searchMenu.add(sResidentMenu);
         searchMenu.add(sRoomMenu);
+        updateMenu.setMargin(new Insets(0, 20, 0, 20));
+        updateMenu.add(uResidentMenu);
+        updateMenu.add(dResidentMenu);
         optionsMenu.setMargin(new Insets(0, 20, 0, 20));
         optionsMenu.add(changeUserMenu);
         optionsMenu.add(exitMenu);
         menuBar.add(searchMenu);
+        menuBar.add(updateMenu);
         menuBar.add(optionsMenu);
         setJMenuBar(menuBar);
 
@@ -56,6 +60,26 @@ public class ManagerInterface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 mainPanel.removeAll();
                 mainPanel.add(new RoomSearch(WIDTH, HEIGHT));
+                mainPanel.validate();
+                mainPanel.repaint();
+            }
+        });
+
+        uResidentMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.removeAll();
+                mainPanel.add(new UpdateResident(WIDTH, HEIGHT));
+                mainPanel.validate();
+                mainPanel.repaint();
+            }
+        });
+
+        dResidentMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.removeAll();
+                mainPanel.add(new DeleteResidentContract(WIDTH, HEIGHT));
                 mainPanel.validate();
                 mainPanel.repaint();
             }
