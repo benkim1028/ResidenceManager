@@ -1,5 +1,6 @@
 package backend;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -32,10 +33,7 @@ public class Resident {
             stmt.executeQuery(query);
             System.out.println("Resident " + studentid + " deleted");
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -48,10 +46,7 @@ public class Resident {
                 return rs.getString("name").trim();
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return "";
     }
@@ -65,10 +60,7 @@ public class Resident {
                 return rs.getInt("age");
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return 0;
     }
@@ -82,10 +74,7 @@ public class Resident {
                 return rs.getString("phone").trim();
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return "";
     }
@@ -99,10 +88,7 @@ public class Resident {
                 return rs.getString("email").trim();
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return "";
     }
@@ -116,10 +102,7 @@ public class Resident {
                 return true;
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -147,10 +130,7 @@ public class Resident {
             return new DefaultTableModel(data, columnNames);
 
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

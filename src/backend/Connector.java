@@ -1,5 +1,6 @@
 package backend;
 
+import javax.swing.*;
 import java.sql.*;
 import java.io.*;
 
@@ -16,7 +17,6 @@ public class Connector {
 
     public static Connection getConnection() {
         try {
-            // Make the connection
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", ORA_ACCOUNT, ORA_PASSWORD);
 
@@ -24,10 +24,7 @@ public class Connector {
                 return con;
             }
         } catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

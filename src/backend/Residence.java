@@ -1,5 +1,6 @@
 package backend;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -84,10 +85,7 @@ public class Residence {
             return new DefaultTableModel(data, columnNames);
 
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

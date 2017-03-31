@@ -85,10 +85,7 @@ public class UpdateResident extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Invalid age, must be at least 18 years old", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             else {
-                                StringWriter sw = new StringWriter();
-                                se.printStackTrace(new PrintWriter(sw));
-                                String exceptionAsString = sw.toString();
-                                System.out.println(exceptionAsString);
+                                JOptionPane.showMessageDialog(null, se.toString(), "Error", JOptionPane.ERROR_MESSAGE);
                             }
 
                         }

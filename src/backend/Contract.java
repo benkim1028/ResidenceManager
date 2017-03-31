@@ -1,5 +1,6 @@
 package backend;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -25,10 +26,7 @@ public class Contract {
             stmt.executeQuery(query);
             System.out.println("Contract " + contractid + " deleted");
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -41,10 +39,7 @@ public class Contract {
                 return rs.getString("studentid").trim();
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return "";
     }
@@ -58,10 +53,7 @@ public class Contract {
                 return true;
             }
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -89,10 +81,7 @@ public class Contract {
             return new DefaultTableModel(data, columnNames);
 
         }catch (SQLException e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            String exceptionAsString = sw.toString();
-            System.out.println(exceptionAsString);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
