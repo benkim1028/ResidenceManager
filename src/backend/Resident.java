@@ -14,6 +14,24 @@ public class Resident {
 
     private static Connection con = Connector.getConnection();
 
+    public static DefaultTableModel searchResident(boolean studentidbox, boolean namebox, boolean agebox, boolean phonebox, boolean emailbox, boolean roomidbox) {
+        String select = createSelectString(studentidbox, namebox, agebox, phonebox, emailbox, roomidbox);
+        String from = "FROM resident ";
+        String query = select + from;
+        System.out.println(query);
+        return executeSearchQuery(query);
+    }
+
+    public static DefaultTableModel searchResident(boolean studentidbox, boolean namebox, boolean agebox, boolean phonebox, boolean emailbox, boolean roomidbox,
+                                                   String studentidText, String nameText, int ageDrop, int ageVal, String phoneText, String emailText, String roomidText) {
+        String select = createSelectString(studentidbox, namebox, agebox, phonebox, emailbox, roomidbox);
+        String from = "FROM resident ";
+        String where = createWhereString(studentidText, nameText, ageDrop, ageVal, phoneText, emailText, roomidText);
+        String query = select + from + where;
+        System.out.println(query);
+        return executeSearchQuery(query);
+    }
+
     public static DefaultTableModel viewResident() {
         String query = "SELECT * FROM resident";
         return executeSearchQuery(query);
@@ -107,6 +125,54 @@ public class Resident {
         return false;
     }
 
+    private static String createSelectString(boolean studentidbox, boolean namebox, boolean agebox, boolean phonebox, boolean emailbox, boolean roomidbox) {
+        String select = "SELECT ";
+        if (studentidbox) {
+            select = select + "studentid, ";
+        }
+        if (namebox) {
+            select = select + "name, ";
+        }
+        if (agebox) {
+            select = select + "age, ";
+        }
+        if (phonebox) {
+            select = select + "phone, ";
+        }
+        if (emailbox) {
+            select = select + "email, ";
+        }
+        if (roomidbox) {
+            select = select + "roomid, ";
+        }
+        select = select.substring(0, select.length() - 2) + " ";
+        return select;
+    }
+
+    private static String createWhereString(String studentidText, String nameText, int ageDrop, int ageVal, String phoneText, String emailText, String roomidText) {
+        String where = "WHERE ";
+        if (!studentidText.equals("")) {
+            where = where + "studentid LIKE '%" + studentidText + "%' AND ";
+        }
+        if (!nameText.equals("")) {
+            where = where + "name LIKE '%" + nameText + "%' AND ";
+        }
+        if (ageVal != -1) {
+            where = where + "age " + findSymbolString(ageDrop) + " '" + ageVal + "' AND ";
+        }
+        if (!emailText.equals("")) {
+            where = where + "email LIKE '%" + emailText + "%' AND ";
+        }
+        if (!phoneText.equals("")) {
+            where = where + "phone LIKE '%" + phoneText + "%' AND ";
+        }
+        if (!roomidText.equals("")) {
+            where = where + "roomid LIKE '%" + roomidText + "%' AND ";
+        }
+        where = where.substring(0, where.length()-5);
+        return where;
+    }
+
     private static DefaultTableModel executeSearchQuery(String query) {
         try {
             Statement stmt = con.createStatement();
@@ -133,5 +199,23 @@ public class Resident {
             JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
+    }
+
+    private static String findSymbolString(int dropIndex) {
+        if (dropIndex == 0) {
+            return "<";
+        }
+        else if (dropIndex == 1) {
+            return ">";
+        }
+        else if (dropIndex == 2) {
+            return "=";
+        }
+        else if (dropIndex == 3) {
+            return "<=";
+        }
+        else {
+            return ">=";
+        }
     }
 }

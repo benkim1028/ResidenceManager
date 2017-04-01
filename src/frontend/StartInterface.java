@@ -48,7 +48,7 @@ public class StartInterface extends JFrame {
         managerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new ManagerInterface().setVisible(true);
+                new PasswordInterface().setVisible(true);
                 dispose();
             }
         });
