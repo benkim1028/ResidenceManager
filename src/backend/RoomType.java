@@ -144,9 +144,15 @@ public class RoomType {
     public static DefaultTableModel doubleAggregation(int agg1, int agg2, int groupBy ){
         String query = "SELECT Temp.rsize, Temp.agg FROM (SELECT rt.rsize, MIN(rt.rate) AS agg FROM roomtype rt GROUP BY rt.rsize) Temp WHERE Temp.agg = (SELECT MAX(Temp.agg) FROM  (SELECT rt.rsize, MIN(rt.rate) AS agg FROM roomtype rt GROUP BY rt.rsize) Temp)";
 
+
 //        String agg1 = "MAX";
 //        String agg2 = "MIN";
         String aggregation1 = "";
+        String aggregation2 = "";
+        String select = "SELECT Temp.agg, ";
+        String select2 = "SELECT ";
+        String gb = "";
+
         if(agg1== 0){
             aggregation1 = "MAX";
         }
@@ -163,7 +169,7 @@ public class RoomType {
             aggregation1 = "SUM";
         }
 
-        String aggregation2 = "";
+
         if(agg2== 0){
             aggregation2 = "MAX";
         }
@@ -180,8 +186,7 @@ public class RoomType {
             aggregation2 = "SUM";
         }
 
-        String select = "SELECT Temp.agg, ";
-        String select2 = "SELECT ";
+
 
         if (groupBy ==0) {
             select = select + "Temp.type, ";
@@ -204,7 +209,7 @@ public class RoomType {
             select2 = select2 + "rt.features, ";
         }
 
-        String gb = "";
+
 
         if(groupBy == 0){
             gb = "rt.type";
@@ -228,9 +233,19 @@ public class RoomType {
         String where = "WHERE Temp.agg = (SELECT "+aggregation1+"(Temp.agg) FROM  (" +select2+aggregation2+"(rt.rate) AS agg FROM roomtype rt GROUP BY "+gb+") Temp)";
 
         String q = select + from + where;
-        System.out.println(q);
+        String q2 = "SELECT "+aggregation1+"(Temp.agg) FROM  (SELECT rt.type, "+aggregation2+"(rt.rate) AS agg FROM roomtype rt GROUP BY rt.type) Temp";
 
-        return executeDoubleAggQuery(q);
+        String result = "";
+        if(agg1 ==0 || agg1 ==1){
+            result = q;
+        }
+        else{
+            result = q2;
+        }
+
+        System.out.println(result);
+
+        return executeDoubleAggQuery(result);
     }
 
     private static Number executeFindQuery(String query, int attributeDrop) {
