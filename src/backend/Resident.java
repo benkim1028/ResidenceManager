@@ -155,19 +155,19 @@ public class Resident {
             where = where + "studentid LIKE '%" + studentidText + "%' AND ";
         }
         if (!nameText.equals("")) {
-            where = where + "name LIKE '%" + nameText + "%' AND ";
+            where = where + "UPPER(name) LIKE UPPER('%" + nameText + "%') AND ";
         }
         if (ageVal != -1) {
             where = where + "age " + findSymbolString(ageDrop) + " '" + ageVal + "' AND ";
         }
         if (!emailText.equals("")) {
-            where = where + "email LIKE '%" + emailText + "%' AND ";
+            where = where + "UPPER(email) LIKE UPPER('%" + emailText + "%') AND ";
         }
         if (!phoneText.equals("")) {
             where = where + "phone LIKE '%" + phoneText + "%' AND ";
         }
         if (!roomidText.equals("")) {
-            where = where + "roomid LIKE '%" + roomidText + "%' AND ";
+            where = where + "UPPER(roomid) LIKE UPPER('%" + roomidText + "%') AND ";
         }
         where = where.substring(0, where.length()-5);
         return where;
